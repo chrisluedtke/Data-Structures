@@ -1,30 +1,127 @@
-# Data Structures 
+# Data Structures
+
+Resources
+* [Data Structures for  Coding Interviews](https://www.interviewcake.com/article/python/data-structures-coding-interview?course=dsa)
+* [Introduction to Binary Heaps (MaxHeaps)](https://www.youtube.com/watch?v=WCm3TqScBM8)
 
 Topics:
- * Queues
- * Doubly Linked Lists
- * Binary Search Trees
- * Heaps
+1. Queues
+1. Doubly Linked Lists
+1. Binary Search Trees
+1. Heaps
 
 Stretch Goals:
- * Generic Heaps
- * AVL Trees
- * LRU Caches
+1. Generic Heaps
+1. AVL Trees
+1. LRU Caches
 
 ## Tasks
 1. Implement each data structure, starting with the queue. Make sure you're in the approriate directory, then run `python3 test_[NAME OF DATA STRUCTURE].py` to run the tests for that data structure and check your progress. Get all the tests passing for each data structure.
 
 2. Open up the `Data_Structures_Questions.md` file, which asks you to evaluate the runtime complexity of each of the methods you implemented for each data structure. Add your answers to each of the questions in the file.
 
- > NOTE: The quickest and easiest way to reliably import a file in Python is to just copy and paste the file you want to import into the same directory as the file that wants to import. This obviously isn't considered best practice, but it is the most reliable way to do it across all platforms.
+> NOTE: The quickest and easiest way to reliably import a file in Python is to just copy and paste the file you want to import into the same directory as the file that wants to import. This obviously isn't considered best practice, but it is the most reliable way to do it across all platforms.
+
+### Arrays
+A **short integer** is an 8-bit. For example we'll use an unsigned "super-short" 4-bit memory integer. Here are numbers 1, 2, 3, 4.
+```
+0 0 0 0 
+0 0 0 1
+0 0 1 0 
+0 0 1 1
+```
+What if we have something more extreme? To make an array we must first allocate memory for it. If we have 5 4-bit integers, we need 20 blocks, and we would fill them like above:
+```
+0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 1
+```
+How would we look up values? If we wanted `array[3]` we compute `3 index * 4 bits = 12 location in memory`.
+In python, arrays start at `0` because `0 index * 4 bits = 0 location in memory`, which is the start.
+Arrays have to be continuous. We can't simply remove an item, we would have to represent it as:
+```
+0 0 0 0
+```
+Or we could "shift" all the array items down to cover up the spot of the item we wanted to delete. We would then have to mark the last 4 bits as not in use.
+
+### Stacks
+First In, Last Out. Used when the most recent thing is the most important.
+Examples:
+* maze traversal.
 
 ### Queues
- * Should have the methods: `enqueue`, `dequeue`, and `len`.
-   * `enqueue` should add an item to the back of the queue.
-   * `dequeue` should remove and return an item from the front of the queue.
-   * `len` returns the number of items in the queue.
+First In, First Out. Opposite of stack.
+
+Examples
+* selling produce (sell them in the order you acquired them to minimize expired goods)
+* music playlist
+
+Should have the methods: `enqueue`, `dequeue`, and `len`.
+* `enqueue` should add an item to the back of the queue.
+* `dequeue` should remove and return an item from the front of the queue.
+* `len` returns the number of items in the queue.
  
 ![Image of Queue](https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/600px-Data_Queue.svg.png)
+
+### Linked Lists
+A collection of nodes connected in sequence.
+```python
+class Node:
+    def __init__(self, value=None, next_node=None):
+        self.value = value
+        self.next_node = next_node
+    
+    # the above is all you need, but here are
+    # some nice accessors:
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next_node
+
+    # a nice mutator:
+    def set_next(self, new_next):
+        self.next_node = new_next
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    # methods to add to list
+    def add_to_tail(self, value):
+        new_node = Node(value)
+
+        if not self.head:  # so we can first add to head or tail
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.set_next(new_node)
+            self.tail = new_node
+
+    def add_to_head(self, value):
+        new_node = Node(value)
+
+        if not self.head:  # so we can first add to head or tail
+            self.head = new_node
+            self.tail = new_node
+        else:
+            temp_node = self.head
+            self.head = new_node
+            self.head.set_next(temp_node)
+
+    # method to find in list
+    def contains(self, value):
+        if not self.head:  # if no head, list is empty, cannot contain our v
+            return False
+
+        current = self.head
+        while current:
+            if current.get_value() == value:
+                return True
+
+            current = current.get_next()
+
+        return False
+```
 
 ### Doubly Linked Lists
  * The `ListNode` class, which represents a single node in the doubly-linked list, has already been implemented for you. Inspect this code and try to understand what it is doing to the best of your ability.
