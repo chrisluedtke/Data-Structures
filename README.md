@@ -43,14 +43,22 @@ Arrays have to be continuous. We can't simply remove an item, we would have to r
 Or we could "shift" all the array items down to cover up the spot of the item we wanted to delete. We would then have to mark the last 4 bits as not in use.
 
 ### Stacks
-First In, Last Out. Used when the most recent thing is the most important.
+**Stacks** are a linear data structure that follows LIFO (Last In, First Out). They are used when the most recent thing is the most important.
+
 Examples:
-* maze traversal.
+* maze traversal
+* recursive stack trace
+
+Should have methods:
+* `push(item)` adds an item to the top of the stack
+* `pop()` moves the item on the top of ths tack and typically returns the item that is removed
+* `peek()` returns the value of the item on the top of ht estack without removing it
 
 ### Queues
-First In, First Out. Opposite of stack.
+**Queues** are a linear data structure that follows FIFO (First In, First Out). Opposite of stack.
 
 Examples
+* line of people at a store/bank/theater
 * selling produce (sell them in the order you acquired them to minimize expired goods)
 * music playlist
 
@@ -62,8 +70,7 @@ Should have the methods: `enqueue`, `dequeue`, and `len`.
 ![Image of Queue](https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/600px-Data_Queue.svg.png)
 
 ### Linked Lists
-A collection of nodes connected in sequence. 
-Whereas arrays store and index elements contiguously, each element of a linked list is stored in a node. Each node then has a reference (or a ‘pointer’) to the next node in the linked list. In this way, linked lists describe lists of things in a recursive fashion, while arrays describe lists of things in an iterative fashion.
+**Linked Lists** are a linear data structure composed of nodes connected in sequence. While arrays store and index elements contiguously, each element of a linked list is stored in a node. Unlike arrays, in which items can be accessed directly by index, items in a linked list only have reference (or a 'pointer') to the *next* item, so they can only be traversed in one direction. In this way, linked lists describe lists of things in a recursive fashion, while arrays describe lists of things in an iterative fashion.
 
 ```python
 class Node:
@@ -128,6 +135,9 @@ class LinkedList:
 ### Doubly Linked Lists
 Double linked lists are useful for situations in which the space is dynamic. If we knew how much space was needed for our problem, we would be better off with an array.
 
+Examples
+* text buffers
+
 * The `ListNode` class, which represents a single node in the doubly-linked list, has already been implemented for you. Inspect this code and try to understand what it is doing to the best of your ability.
 * The `DoublyLinkedList` class itself should have the methods: `add_to_head`, `add_to_tail`, `remove_from_head`, `remove_from_tail`, `move_to_front`, `move_to_end`, `delete`, and `get_max`.
     * `add_to_head` replaces the head of the list with a new value that is passed in.
@@ -143,15 +153,22 @@ Double linked lists are useful for situations in which the space is dynamic. If 
 ![Image of Doubly Linked List](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png)
 
 ### Binary Search Trees
+
+**Binary Trees** simply require that each node has no more than 2 children. **Binary Search Trees** require that each node have no more than 2 children **and** all left children have values less than their parents, all right children have values greater than their parents.
+
 * Should have the methods `insert`, `contains`, `get_max`.
     * `insert` adds the input value to the binary search tree, adhering to the rules of the ordering of elements in a binary search tree.
     * `contains` searches the binary search tree for the input value, returning a boolean indicating whether the value exists in the tree or not.
     * `get_max` returns the maximum value in the binary search tree.
-    * `for_each` performs a traversal of _every_ node in the tree, executing the passed-in callback function on each tree node value. There is a myriad of ways to perform tree traversal; in this case any of them should work. 
+    * `for_each` performs a traversal of _every_ node in the tree, executing the passed-in callback function on each tree node value. There is a myriad of ways to perform tree traversal; in this case any of them should work.
 
 ![Image of Binary Search Tree](https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Binary_search_tree.svg/300px-Binary_search_tree.svg.png)
 
 ### Heaps
+**Heaps** are binary tree data structures implemented as an array. For any node in the heap, the value of the node is larger than the values of its children nodes. Therefore the root of the tree is the largest value.
+
+**Heaps** are implemented as arrays in order to take advantage of constant-time access to any element in the heap, which also allows us to more easily swap elements in different positions throughout the heap. To traverse the tree, we use formulaic look-up methods. Given a parent node's index value, `i`, the parent's left child index is `2i + 1`, and it's right child is located at index `2i + 2`. Conversely,a node's parent is located at index `floor((i - 1) / 2)`.
+
 * Should have the methods `insert`, `delete`, `get_max`, `_bubble_up`, and `_sift_down`.
     * `insert` adds the input value into the heap; this method should ensure that the inserted value is in the correct spot in the heap
     * `delete` removes and returns the 'topmost' value from the heap; this method needs to ensure that the heap property is maintained after the topmost element has been removed. 
